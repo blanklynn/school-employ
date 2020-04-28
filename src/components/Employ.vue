@@ -38,6 +38,11 @@
                 </td>
                 <td>{{item.userName}}</td>
                 <td>{{item.createAt}}</td>
+                <td v-if="uid == 1">
+                  <ul class="icons alt">
+                    <li><a class="icon alt fa-close" @click="deleteEmploy(item.employ)"></a></li>
+                  </ul>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -59,8 +64,10 @@
                 <td>{{item.occupationName}}</td>
                 <td>{{item.createAt}}</td>
                 <td>
-                  <a @click="seeAsk(item.employ.id)" class="button small">查看咨询</a>
-                  <a @click="deleteEmploy(item.employ)" class="button small">删除</a>
+                  <ul class="icons alt">
+                    <li><a class="icon alt fa-eye" @click="seeAsk(item.employ.id)"></a></li>
+                    <li><a class="icon alt fa-close" @click="deleteEmploy(item.employ)"></a></li>
+                  </ul>
                 </td>
               </tr>
             </tbody>
@@ -113,6 +120,7 @@
     name: "Employ",
     data() {
       return {
+        uid: '',
         ifShow: true,
         buttonOneClass: 'button special fit',
         buttonTwoClass: 'button fit',
@@ -151,6 +159,7 @@
     },
     created: function() {
       if (this.$cookies.isKey('user')) {
+        this.uid = this.$cookies.get('user').id
         this.getEmploys()
         this.getMyEmploys()
         this.getVocations()

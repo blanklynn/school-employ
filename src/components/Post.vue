@@ -51,17 +51,15 @@
                 <td>{{item.post.commentSum}}</td>
                 <td>{{item.post.applyNum}}/{{item.post.applySum}}</td>
                 <td>
-                  <!-- 没圈
-                  <a @click="getPostList(item.post.id)" class="icon fa-eye"></a>
-                  有圈 -->
                   <ul class="icons alt">
                     <li><a @click="getPostList(item.post.id)" class="icon fa-eye"></a></li>
+                    <li><a @click="updatePost(item.post)" class="icon fa-cog"></a></li>
+                    <li><a @click="deletePost(item.post)" class="icon fa-close"></a></li>
                   </ul>
                 </td>
               </tr>
             </tbody>
-          </table>   <!-- <li><a @click="updatePost(item.post)" class="icon small alt fa-cog"></a></li>
-                  <li><a @click="deletePost(item.post)" class="icon small alt fa-close"></a></li> -->
+          </table>
           <hr v-if="showList" />
           <table v-if="showList">
             <thead>
