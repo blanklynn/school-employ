@@ -30,12 +30,12 @@
         <section class="split contact">
           <section v-for="item in comments" :id="item.comment.id">
             <div class="row uniform">
-              <div class="9u 12u">
+              <div class="8u 12u">
                 <h3>第{{item.comment.commentIndex}}楼-{{item.userName}}:</h3>
                 <p>{{item.comment.content}}</p>
               </div>
-              <div class="3u 12u$">
-                <ul class="actions" style="text-align:right">
+              <div class="4u 12u$" style="text-align:right">
+                <ul class="actions">
                   <li v-if="item.isLike == 0"><a @click="like(item.comment.id)" class="button small icon fa-heart-o">赞{{item.comment.commentLikeSum}}</a></li>
                   <li v-else><a @click="unlike(item.comment.id)" class="button small icon fa-heart">赞{{item.comment.commentLikeSum}}</a></li>
                   <li v-if="item.comment.userId == userId"><a @click="deleteComment(item.comment.id)" class="button small">删除</a></li>
