@@ -5,10 +5,10 @@
         <h2>{{postItem.post.title}}</h2>
         <p>from {{postItem.userName}}</p>
       </header>
-      <p>{{postItem.post.content}}</p>
+      <pre style="word-wrap: break-word; white-space: pre-wrap;">{{postItem.post.content}}</pre>
       <ul class="actions">
         <li><a @click="showComment()" class="button special">评论</a></li>
-        <li>
+        <li v-if="postItem.post.type == 1">
           <a v-if="applyStatus" class="button special disabled">已申请</a>
           <a v-else @click="addApply()" class="button special">申请宣讲会</a>
         </li>

@@ -4,7 +4,7 @@
       <header>
         <h2>{{employItem.employ.title}}</h2>
         <p v-if="employItem.type == 1">推荐人:{{employItem.userName}}同学，发布于{{employItem.createAt}}</p>
-        <p v-else-if="employItem.type == 2">推荐人:{{employItem.userName}}老师，发布于{{employItem.createAt}}</p>
+        <p v-else-if="employItem.type == 2 || employItem.type == 4">推荐人:{{employItem.userName}}老师，发布于{{employItem.createAt}}</p>
         <p v-else>推荐人:{{employItem.userName}}企业官方，发布于{{employItem.createAt}}</p>
       </header>
       <p><strong>关键词:{{employItem.employ.keyWords}}</strong></p>
@@ -106,38 +106,34 @@
           alert("服务器发生错误！请稍后再试");
         }
       });
-
-      $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: this.getRecommendsUrl,
-        async: false,
-        data: {
-          'eid': this.$route.query.id
-        },
-        success: function(data) {
-          if (data.Status == 200) {
-            vm.recommends = data.msg.map((r) => {
-              var msg = ""
-              if (r.type == 1) {
-                msg = "同学:  "
-              } else {
-                msg = "老师:  "
-              }
-              return r.userName + msg + r.recommend.reason
-            })
-          } else {
-            alert("数据返回错误！请稍后再试");
-          }
-        },
-        error: function() {
-          alert("服务器发生错误！请稍后再试");
-        }
-      });
-
+      this.getRecommends()
       this.addClick()
     },
     methods: {
+      getRecommends() {
+        var vm = this
+        $.ajax({
+          type: "GET",
+          dataType: "json",
+          url: this.getRecommendsUrl,
+          async: false,
+          data: {
+            'eid': this.$route.query.id
+          },
+          success: function(data) {
+            if (data.Status == 200) {
+              vm.recommends = data.msg.map((r) => {
+                return r.userName + " :  " + r.recommend.reason
+              })
+            } else {
+              alert("数据返回错误！请稍后再试");
+            }
+          },
+          error: function() {
+            alert("服务器发生错误！请稍后再试");
+          }
+        });
+      },
       addClick() {
         var vm = this
         var newClick = {
@@ -189,6 +185,7 @@
               vm.recommend.reason = ''
               vm.ifRecommond = false
               alert("投递成功！");
+              vm.getRecommends()
             } else {
               alert("数据返回错误！请稍后再试");
             }

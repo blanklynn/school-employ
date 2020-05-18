@@ -243,7 +243,7 @@
           url = vm.addPostUrl
           delete vm.newPost.id
         }
-        if (vm.newPost.applySum < 1) {
+        if (vm.newPost.type == 1 && vm.newPost.applySum < 1) {
           alert("请检查您的宣讲会申请人数并重试，谢谢")
           return
         }
@@ -271,6 +271,11 @@
       },
       updatePost(item) {
         var vm = this
+        
+        if(vm.showForm){
+          vm.showForm = false
+          return
+        }
         vm.newPost = item
         vm.showForm = true
       },

@@ -56,8 +56,8 @@
               <strong><sup v-if="userItem.isChecked == 2">认证中</sup></strong>
             </li>
             <li>昵称：{{userItem.nike}}</li>
-            <li>专业：{{userItem.major}}</li>
-            <li>班级：{{userItem.className}}</li>
+            <li v-if="userItem.type == 1">专业：{{userItem.major}}</li>
+            <li v-if="userItem.type == 1">班级：{{userItem.className}}</li>
             <li>电话：{{userItem.phone}}</li>
             <li>邮箱：{{userItem.mail}}</li>
           </ul>
@@ -109,7 +109,7 @@
               <tr>
                 <th>账号</th>
                 <th>姓名</th>
-                <th>班级</th>
+                <th>身份</th>
                 <th>联系电话</th>
               </tr>
             </thead>
@@ -117,7 +117,10 @@
               <tr v-for="item in unCheckedUser" :id="item.id">
                 <td>{{item.number}}</td>
                 <td @click="showUserDetail(item)"><strong>{{item.name}}</strong></td>
-                <td>{{item.major}}{{item.className}}</td>
+                <td v-if="item.type == 1">学生</td>
+                <td v-else-if="item.type == 2">老师</td>
+                <td v-else-if="item.type == 3">企业</td>
+                <td v-else>超级管理员</td>
                 <td>{{item.phone}}</td>
                 <td v-if="item.isChecked == 1">
                   <a class="button small special disabled">已认证</a>
@@ -141,8 +144,8 @@
             <li v-else>身份：超级管理员</li>
             <li>姓名：{{searchItem.name}}</li>
             <li>昵称：{{searchItem.nike}}</li>
-            <li>专业：{{searchItem.major}}</li>
-            <li>班级：{{searchItem.className}}</li>
+            <li v-if="searchItem.type == 1">专业：{{searchItem.major}}</li>
+            <li v-if="searchItem.type == 1">班级：{{searchItem.className}}</li>
             <li>电话：{{searchItem.phone}}</li>
             <li>邮箱：{{searchItem.mail}}</li>
           </ul>
@@ -272,11 +275,12 @@
           },
           success: function(data) {
             if (data.Status == 200) {
-              if (data.msg == null) {
-                alert("请检查您输入的账号并重试")
+              if (data.msg == -1) {
+                alert("未找到该账号信息，请检查您输入的账号并重试")
               } else {
-                vm.showSearch = true
-                vm.searchItem = data.msg
+                let m = []
+                m.push(data.msg)
+                vm.unCheckedUser = m
               }
             } else {
               alert("数据返回错误！请稍后再试");

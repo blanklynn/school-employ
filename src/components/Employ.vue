@@ -26,6 +26,7 @@
               <tr>
                 <th>发布标题</th>
                 <th>发布人</th>
+                <th>发布岗位</th>
                 <th>发布时间</th>
               </tr>
             </thead>
@@ -37,6 +38,7 @@
                   </router-link>
                 </td>
                 <td>{{item.userName}}</td>
+                <td>{{item.occupationName}}</td>
                 <td>{{item.createAt}}</td>
                 <td v-if="uid == 1">
                   <ul class="icons alt">
@@ -50,7 +52,7 @@
             <thead>
               <tr>
                 <th>发布标题</th>
-                <th>发布职位</th>
+                <th>发布岗位</th>
                 <th>发布时间</th>
               </tr>
             </thead>
